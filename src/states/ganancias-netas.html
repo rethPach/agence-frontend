@@ -1,0 +1,117 @@
+<style>
+  label {
+    font-size: .9em;
+    color: #272727;
+    font-weight: normal;
+  }
+</style>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Seleccionar Consultor</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="row">
+  		<div class="col-xs-3">
+        <label>Selecciona Consultor Type:</label>
+  			<select
+  					ng-change="presenter.onChangeType()"
+            class="form-control"
+            ng-options="option.name for option in presenter.consultoresTypes track by option.id"
+            ng-model="presenter.consultoreTypeSelected"></select>
+  		</div>
+  		<div class="col-xs-3">
+        <label>Selecciona Consultor:</label>
+  			<select
+            class="form-control"
+            ng-options="option.no_usuario for option in presenter.consultores track by option.co_usuario"
+            ng-model="presenter.consultorSelected"></select>
+  		</div>
+      <div class="col-xs-3">
+        <label>From:</label>
+        <p class="input-group">
+          <input type="text" class="form-control" 
+            readonly
+            uib-datepicker-popup="{{presenter.fromDataPicker.format}}" 
+            ng-model="presenter.from" 
+            is-open="presenter.fromDataPicker.opened" 
+            datepicker-options="presenter.fromDataPicker.options" 
+            close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button 
+              type="button" 
+              class="btn btn-default" 
+              ng-click="presenter.fromDataPicker.open()">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+      <div class="col-xs-3">
+        <label>To:</label>
+        <p class="input-group">
+          <input type="text" class="form-control" 
+            readonly
+            uib-datepicker-popup="{{presenter.toDataPicker.format}}" 
+            ng-model="presenter.to" 
+            is-open="presenter.toDataPicker.opened" 
+            datepicker-options="presenter.toDataPicker.options" 
+            close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button 
+              type="button" 
+              class="btn btn-default" 
+              ng-click="presenter.toDataPicker.open()">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+  		<div class="col-xs-3">
+  			<button class="btn btn-primary" ng-click="consultarAction()">Consultar</button>
+  		</div>
+  	</div>
+  </div>
+</div>
+
+<div class="panel panel-default" ng-show="resultadosShow">
+  <div class="panel-heading">
+    <h3 class="panel-title">Resultados</h3>
+  </div>
+  <div class="panel-body">
+  	<uib-tabset active="active">
+	    <uib-tab index="$index + 1" ng-repeat="cliente in clientes.all" heading="{{cliente.cliente_no_razao}}" disable="tab.disabled">
+	     	<table class="table table-bordered">
+	     		<thead>
+	     			<th>Sistema Web</th>
+	     			<th>OS</th>
+	     			<th>NF</th>
+	     			<th>Emissão</th>
+	     			<th>Total</th>
+	     			<th>Líquido</th>
+	     			<th>Comissão</th>
+	     		</thead>
+	     		<tbody>
+	     			<tr ng-repeat="fatura in cliente.faturas track by $index">
+	     				<td>{{fatura.sistema_no_sistema}}</td>
+		     			<td>{{fatura.servicio_consultor_ds_os}}</td>
+		     			<td>{{fatura.num_nf}}</td>
+		     			<td>{{fatura.data_emissao}}</td>
+		     			<td>{{fatura.valor}}</td>
+		     			<td>{{fatura.receita_liquida}}</td>
+		     			<td>{{fatura.comissao}}</td>
+	     			</tr>
+               <tr style="background: #213656; color: white">
+                  <td>Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>{{cliente.sum_valor}}</td>
+                  <td>{{cliente.sum_receita_liquida}}</td>
+                  <td>{{cliente.sum_comissao}}</td>
+               </tr>
+	     		</tbody>
+				</table>
+	    </uib-tab>
+	  </uib-tabset>
+  </div>
+</div>

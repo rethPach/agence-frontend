@@ -1,0 +1,79 @@
+{
+    "code": 1000,
+    "result": {
+        "data": [
+            {
+                "cliente_no_razao": "Caltabiano",
+                "sum_valor": 19267.92,
+                "sum_comissao": 913.299408,
+                "sum_receita_liquida": 15221.6568,
+                "faturas": [
+                    {
+                        "num_nf": 433,
+                        "valor": 6720,
+                        "comissao_cn": 6,
+                        "total_imp_inc": 21,
+                        "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                        "consultor_co_usuario": "carlos.carvalho",
+                        "cliente_co_cliente": 6947,
+                        "cliente_no_razao": "Caltabiano",
+                        "cliente_no_fantasia": "Caltabiano",
+                        "sistema_no_sistema": "Outsourcing Caltabiano",
+                        "servicio_consultor_ds_os": "Intranet Caltabiano",
+                        "servicio_consultor_ds_ca": "",
+                        "receita_liquida": 5308.8,
+                        "comissao": 318.528,
+                        "custo_fixo": null,
+                        "lucro": null,
+                        "data_emissao": "2007-01-25",
+                        "data_emissao_ano": "2007",
+                        "data_emissao_mes": "1"
+                    },
+                    {
+                        "num_nf": 452,
+                        "valor": 6783.02,
+                        "comissao_cn": 6,
+                        "total_imp_inc": 21,
+                        "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                        "consultor_co_usuario": "carlos.carvalho",
+                        "cliente_co_cliente": 6947,
+                        "cliente_no_razao": "Caltabiano",
+                        "cliente_no_fantasia": "Caltabiano",
+                        "sistema_no_sistema": "Outsourcing Caltabiano",
+                        "servicio_consultor_ds_os": "Intranet Caltabiano",
+                        "servicio_consultor_ds_ca": "",
+                        "receita_liquida": 5358.585800000001,
+                        "comissao": 321.515148,
+                        "custo_fixo": null,
+                        "lucro": null,
+                        "data_emissao": "2007-03-14",
+                        "data_emissao_ano": "2007",
+                        "data_emissao_mes": "3"
+                    },
+                    {
+                        "num_nf": 457,
+                        "valor": 5764.9,
+                        "comissao_cn": 6,
+                        "total_imp_inc": 21,
+                        "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                        "consultor_co_usuario": "carlos.carvalho",
+                        "cliente_co_cliente": 6947,
+                        "cliente_no_razao": "Caltabiano",
+                        "cliente_no_fantasia": "Caltabiano",
+                        "sistema_no_sistema": "Outsourcing Caltabiano",
+                        "servicio_consultor_ds_os": "Intranet Caltabiano",
+                        "servicio_consultor_ds_ca": "",
+                        "receita_liquida": 4554.271,
+                        "comissao": 273.25626,
+                        "custo_fixo": null,
+                        "lucro": null,
+                        "data_emissao": "2007-03-14",
+                        "data_emissao_ano": "2007",
+                        "data_emissao_mes": "3"
+                    }
+                ]
+            }
+        ],
+        "message": "Todo Cool"
+    }
+}

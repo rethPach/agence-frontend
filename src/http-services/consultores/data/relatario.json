@@ -1,0 +1,349 @@
+{
+    "code": 1000,
+    "result": {
+        "data": {
+            "custo_fixo_medio": 2624.5,
+            "desempenos": [
+                {
+                    "name": "Carlos Henrique de Carvalho Filho",
+                    "sum_receita_liquida": 15221.6568,
+                    "sum_comissao": 913.2994080000001,
+                    "sum_custo_fixo": 7698,
+                    "sum_lucro": 6610.357392000001,
+                    "years": [
+                        {
+                            "name": 2007,
+                            "sum_receita_liquida": 15221.6568,
+                            "sum_comissao": 913.2994080000001,
+                            "sum_custo_fixo": 7698,
+                            "sum_lucro": 6610.357392000001,
+                            "months": [
+                                {
+                                    "name": 1,
+                                    "periodo": "January of 2007",
+                                    "sum_receita_liquida": 5308.8,
+                                    "sum_comissao": 318.528,
+                                    "sum_custo_fixo": 2566,
+                                    "sum_lucro": 2424.272,
+                                    "facturas": [
+                                        {
+                                            "num_nf": 433,
+                                            "valor": 6720,
+                                            "comissao_cn": 6,
+                                            "total_imp_inc": 21,
+                                            "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                                            "consultor_co_usuario": "carlos.carvalho",
+                                            "cliente_co_cliente": 6947,
+                                            "cliente_no_razao": "Caltabiano",
+                                            "cliente_no_fantasia": "Caltabiano",
+                                            "sistema_no_sistema": "Outsourcing Caltabiano",
+                                            "servicio_consultor_ds_os": "Intranet Caltabiano",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 5308.8,
+                                            "comissao": 318.528,
+                                            "custo_fixo": 2566,
+                                            "lucro": 2424.272,
+                                            "data_emissao": "2007-01-25",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": 3,
+                                    "periodo": "March of 2007",
+                                    "sum_receita_liquida": 9912.856800000001,
+                                    "sum_comissao": 594.7714080000001,
+                                    "sum_custo_fixo": 5132,
+                                    "sum_lucro": 4186.085392000001,
+                                    "facturas": [
+                                        {
+                                            "num_nf": 452,
+                                            "valor": 6783.02,
+                                            "comissao_cn": 6,
+                                            "total_imp_inc": 21,
+                                            "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                                            "consultor_co_usuario": "carlos.carvalho",
+                                            "cliente_co_cliente": 6947,
+                                            "cliente_no_razao": "Caltabiano",
+                                            "cliente_no_fantasia": "Caltabiano",
+                                            "sistema_no_sistema": "Outsourcing Caltabiano",
+                                            "servicio_consultor_ds_os": "Intranet Caltabiano",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 5358.585800000001,
+                                            "comissao": 321.515148,
+                                            "custo_fixo": 2566,
+                                            "lucro": 2471.070652000001,
+                                            "data_emissao": "2007-03-14",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "3"
+                                        },
+                                        {
+                                            "num_nf": 457,
+                                            "valor": 5764.9,
+                                            "comissao_cn": 6,
+                                            "total_imp_inc": 21,
+                                            "consultor_no_usuario": "Carlos Henrique de Carvalho Filho",
+                                            "consultor_co_usuario": "carlos.carvalho",
+                                            "cliente_co_cliente": 6947,
+                                            "cliente_no_razao": "Caltabiano",
+                                            "cliente_no_fantasia": "Caltabiano",
+                                            "sistema_no_sistema": "Outsourcing Caltabiano",
+                                            "servicio_consultor_ds_os": "Intranet Caltabiano",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 4554.271,
+                                            "comissao": 273.25626,
+                                            "custo_fixo": 2566,
+                                            "lucro": 1715.0147399999996,
+                                            "data_emissao": "2007-03-14",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "3"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Carlos Flávio Girão de Arruda",
+                    "sum_receita_liquida": 40223.16,
+                    "sum_comissao": 3741.0000000000005,
+                    "sum_custo_fixo": 24147,
+                    "sum_lucro": 12335.16,
+                    "years": [
+                        {
+                            "name": 2007,
+                            "sum_receita_liquida": 40223.16,
+                            "sum_comissao": 3741.0000000000005,
+                            "sum_custo_fixo": 24147,
+                            "sum_lucro": 12335.16,
+                            "months": [
+                                {
+                                    "name": 2,
+                                    "periodo": "February of 2007",
+                                    "sum_receita_liquida": 21503.880000000005,
+                                    "sum_comissao": 1869.0720000000001,
+                                    "sum_custo_fixo": 13415,
+                                    "sum_lucro": 6219.808000000001,
+                                    "facturas": [
+                                        {
+                                            "num_nf": 436,
+                                            "valor": 9911,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 3,
+                                            "cliente_no_razao": "Toyota do Brasil Ltda",
+                                            "cliente_no_fantasia": "Toyota do Brasil",
+                                            "sistema_no_sistema": "Sistemas Toyota",
+                                            "servicio_consultor_ds_os": "Geral - Suporte e Manutenção OnDemand",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 8325.24,
+                                            "comissao": 832.524,
+                                            "custo_fixo": 2683,
+                                            "lucro": 4809.716,
+                                            "data_emissao": "2007-02-01",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "2"
+                                        },
+                                        {
+                                            "num_nf": 437,
+                                            "valor": 9699,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 3,
+                                            "cliente_no_razao": "Toyota do Brasil Ltda",
+                                            "cliente_no_fantasia": "Toyota do Brasil",
+                                            "sistema_no_sistema": "Sistemas Toyota",
+                                            "servicio_consultor_ds_os": "Geral - Suporte e Manutenção OnDemand",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 8147.16,
+                                            "comissao": 814.716,
+                                            "custo_fixo": 2683,
+                                            "lucro": 4649.4439999999995,
+                                            "data_emissao": "2007-02-01",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "2"
+                                        },
+                                        {
+                                            "num_nf": 438,
+                                            "valor": 2808,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 21,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 7007,
+                                            "cliente_no_razao": "Controle Soluções Compartilhadas",
+                                            "cliente_no_fantasia": "Controle Soluções Compartilhadas",
+                                            "sistema_no_sistema": "Open Kube",
+                                            "servicio_consultor_ds_os": "Desenvolvimento do Sistema",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 2218.32,
+                                            "comissao": 221.83200000000002,
+                                            "custo_fixo": 2683,
+                                            "lucro": -686.5119999999997,
+                                            "data_emissao": "2007-02-07",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "2"
+                                        },
+                                        {
+                                            "num_nf": 446,
+                                            "valor": 1674.5,
+                                            "comissao_cn": 0,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 7031,
+                                            "cliente_no_razao": "",
+                                            "cliente_no_fantasia": "Banco Bradesco AM",
+                                            "sistema_no_sistema": "SisconDJ 3.0 AM",
+                                            "servicio_consultor_ds_os": "Manutenção preventiva / corretiva",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 1406.58,
+                                            "comissao": 0,
+                                            "custo_fixo": 2683,
+                                            "lucro": -1276.42,
+                                            "data_emissao": "2007-02-14",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "2"
+                                        },
+                                        {
+                                            "num_nf": 445,
+                                            "valor": 1674.5,
+                                            "comissao_cn": 0,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 2,
+                                            "cliente_no_razao": "Banco Bradesco S/A",
+                                            "cliente_no_fantasia": "Banco Bradesco MT",
+                                            "sistema_no_sistema": "SisconDJ 2.0 AM",
+                                            "servicio_consultor_ds_os": "Manutenção preventiva / corretiva",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 1406.58,
+                                            "comissao": 0,
+                                            "custo_fixo": 2683,
+                                            "lucro": -1276.42,
+                                            "data_emissao": "2007-02-14",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "2"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": 1,
+                                    "periodo": "January of 2007",
+                                    "sum_receita_liquida": 2343.6,
+                                    "sum_comissao": 234.36,
+                                    "sum_custo_fixo": 2683,
+                                    "sum_lucro": -573.7600000000002,
+                                    "facturas": [
+                                        {
+                                            "num_nf": 435,
+                                            "valor": 2790,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 3,
+                                            "cliente_no_razao": "Toyota do Brasil Ltda",
+                                            "cliente_no_fantasia": "Toyota do Brasil",
+                                            "sistema_no_sistema": "Fleet Control",
+                                            "servicio_consultor_ds_os": "Migração, Consultoria e Treinamento",
+                                            "servicio_consultor_ds_ca": "Acessando banco de dados SQL Server",
+                                            "receita_liquida": 2343.6,
+                                            "comissao": 234.36,
+                                            "custo_fixo": 2683,
+                                            "lucro": -573.7600000000002,
+                                            "data_emissao": "2007-01-31",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": 3,
+                                    "periodo": "March of 2007",
+                                    "sum_receita_liquida": 16375.68,
+                                    "sum_comissao": 1637.5680000000002,
+                                    "sum_custo_fixo": 8049,
+                                    "sum_lucro": 6689.112,
+                                    "facturas": [
+                                        {
+                                            "num_nf": 449,
+                                            "valor": 7632,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 3,
+                                            "cliente_no_razao": "Toyota do Brasil Ltda",
+                                            "cliente_no_fantasia": "Toyota do Brasil",
+                                            "sistema_no_sistema": "Sistemas Toyota",
+                                            "servicio_consultor_ds_os": "Geral - Suporte e Manutenção OnDemand",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 6410.88,
+                                            "comissao": 641.0880000000001,
+                                            "custo_fixo": 2683,
+                                            "lucro": 3086.792,
+                                            "data_emissao": "2007-03-05",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "3"
+                                        },
+                                        {
+                                            "num_nf": 450,
+                                            "valor": 9222,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 16,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 3,
+                                            "cliente_no_razao": "Toyota do Brasil Ltda",
+                                            "cliente_no_fantasia": "Toyota do Brasil",
+                                            "sistema_no_sistema": "Sistemas Toyota",
+                                            "servicio_consultor_ds_os": "Geral - Suporte e Manutenção OnDemand",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 7746.48,
+                                            "comissao": 774.648,
+                                            "custo_fixo": 2683,
+                                            "lucro": 4288.831999999999,
+                                            "data_emissao": "2007-03-05",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "3"
+                                        },
+                                        {
+                                            "num_nf": 451,
+                                            "valor": 2808,
+                                            "comissao_cn": 10,
+                                            "total_imp_inc": 21,
+                                            "consultor_no_usuario": "Carlos Flávio Girão de Arruda",
+                                            "consultor_co_usuario": "carlos.arruda",
+                                            "cliente_co_cliente": 7007,
+                                            "cliente_no_razao": "Controle Soluções Compartilhadas",
+                                            "cliente_no_fantasia": "Controle Soluções Compartilhadas",
+                                            "sistema_no_sistema": "Open Kube",
+                                            "servicio_consultor_ds_os": "Desenvolvimento do Sistema",
+                                            "servicio_consultor_ds_ca": "",
+                                            "receita_liquida": 2218.32,
+                                            "comissao": 221.83200000000002,
+                                            "custo_fixo": 2683,
+                                            "lucro": -686.5119999999997,
+                                            "data_emissao": "2007-03-08",
+                                            "data_emissao_ano": "2007",
+                                            "data_emissao_mes": "3"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "message": "Todo Cool"
+    }
+}

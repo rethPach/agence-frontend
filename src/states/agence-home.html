@@ -1,113 +1,26 @@
-<style>
-  .calendar label {
-    font-size: .8em;
-    float: right;
-    font-weight: normal;
-    color: #213656;
-  }
-
-  .consultores_seleccinados_box {
-    border: 1px solid #dddddd;
-    margin-top: 22px;
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background: #f5f5f5;
-    overflow-y: scroll;
-    height: 200px
-  }
-
-  .consultores_seleccinados_box .badge {
-    margin: 5px;
-    background: #00467c;
-    border-radius: 0px;
-    padding: 4px;
-  }
-
-</style>
 <uib-tabset active="active">
   <uib-tab index="0" heading="Por Consultor">
-    <div class="panel panel-default" style="margin-top: 20px">
-      <div class="panel-heading">
-        <h3 class="panel-title">Ingresar Periodo</h3>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-6">From</div>
-          <div class="col-xs-6">To</div>
-        </div>
-        <div class="row calendar">
-          <div class="col-xs-3">
-            <label>Month</label>
-            <select
-              ng-change="periodo.onChangeFromMonthSelected()"
-              class="form-control"
-              ng-options="option.txt for option in periodo.from.calendar.months track by option.n"
-              ng-model="periodo.from.monthSelected">
-            </select>
-          </div>
-          <div class="col-xs-3">
-            <label>Year</label>
-             <select
-              class="form-control"
-              ng-change="periodo.onChangeFromYearSelected()"
-              ng-options="option.txt for option in periodo.from.calendar.years track by option.n"
-              ng-model="periodo.from.yearsSelected">
-            </select>
-          </div>
-          <div class="col-xs-3">
-            <label>Month</label>
-            <select
-              class="form-control"
-              ng-options="option.txt for option in periodo.to.calendar.months track by option.n"
-              ng-model="periodo.to.monthSelected">
-            </select>
-          </div>
-          <div class="col-xs-3">
-            <label>Year</label>
-            <select
-              ng-change="periodo.onChangeToYearSelected()"
-              class="form-control"
-              ng-options="option.txt for option in periodo.to.calendar.years track by option.n"
-              ng-model="periodo.to.yearsSelected">
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
+    
+    <nz-periodo periodo="periodo"></nz-periodo>
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Selccionar consultorores</h3>
+        <h3 class="panel-title">Seleccionar consultorores</h3>
       </div>
       <div class="panel-body">
-        <div class="row calendar">
-          <div class="col-xs-4">
-            <label>Selecciona un consultor</label>
-            <select
-              ng-change="selectMulti.onSelectItem()"
-              class="form-control"
-              ng-options="option.no_usuario for option in selectMulti.allNotSelected track by option.co_usuario"
-              ng-model="selectMulti.selected">
-            </select>
-          </div>
-          <div class="col-xs-8">
-            <div class="consultores_seleccinados_box">
-              <span class="badge" ng-repeat="option in selectMulti.allSelected track by option.co_usuario">
-                {{option.no_usuario}}
-                <button 
-                  class="btn btn-danger btn-xs" 
-                  ng-click="selectMulti.onRemoveSelected(option)">x</button>
-              </span>
-            </div>
-          </div>
-        </div>
+        <nz-select-multi select-multi="selectMulti"></nz-select-multi>
       </div>
       <div class="panel-footer">
         <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-primary" ng-click="relatarioAction()">Relatario</button>
-          <button type="button" class="btn btn-primary" ng-click="graficoAction()">Grafico</button>
-          <button type="button" class="btn btn-primary" ng-click="pizzaAction()">Pizza</button>
+          <button type="button" class="btn btn-primary" ng-click="relatarioAction()">
+            Relatario <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-primary" ng-click="graficoAction()">
+            Grafico <span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-primary" ng-click="pizzaAction()">
+            Pizza <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </div>
@@ -117,7 +30,8 @@
         <h3 class="panel-title">Relatario</h3>
       </div>
       <div class="panel-body">
-        <uib-tabset active="active">
+        <div ng-show="!relatario.desempenos.length" style="text-align: center;">No se obtuvieron resultados.</div>
+        <uib-tabset active="active"  ng-show="relatario.desempenos.length">
           <uib-tab index="$index" ng-repeat="consultor in relatario.desempenos" heading="{{consultor.name}}" disable="consultor.disabled">
              <uib-tabset active="active" style="margin-top: 5px">
                 <uib-tab index="$index" ng-repeat="year in consultor.years" heading="{{year.name}}" disable="year.disabled">
@@ -167,7 +81,8 @@
         <div class="clearfix"></div>
       </div>
       <div class="panel-body">
-          <div class="col-xs-8 col-xs-offset-2">
+          <div ng-show="!graficoControl.grafico.data.length" style="text-align: center;">No se obtuvieron resultados.</div>
+          <div class="col-xs-8 col-xs-offset-2"  ng-show="graficoControl.grafico.data.length">
             <canvas id="bar" class="chart chart-bar"
               chart-options="graficoControl.options"
               chart-data="graficoControl.grafico.data" 
@@ -203,7 +118,8 @@
         <div class="clearfix"></div>
       </div>
       <div class="panel-body">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div ng-show="!pizza.graficoMonth.length" style="text-align: center;">No se obtuvieron resultados.</div>
+        <div class="col-xs-6 col-xs-offset-3" ng-show="pizza.graficoMonth.length">
           <canvas 
             class="chart chart-pie"
             chart-data="pizza.graficoMonth" 

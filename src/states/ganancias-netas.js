@@ -1,60 +1,59 @@
 function gananciasNetas($stateProvider) {
 	$stateProvider.state('ganancias-netas', {
 		url: '/ganancias-netas',
-		controller: function($scope, ListaConsultores, GananciasNetasService, GanaciasNetasPresenter) {
+		controller: function($scope, ListaConsultores, 
+			GananciasNetasService, GanaciasNetasPresenter, ProgressBarService) {
 			function init() {
 				angular.extend($scope, {
 					presenter: GanaciasNetasPresenter(),
 					consultarAction: consultarAction,
-					clientes: clientes(),
-					resultadosShow: false
 				});
 
 				listaConsultoresAllAction();
 			}
 
 			function listaConsultoresAllAction() {
-				listaConsultoresAllHandler({});
+				ProgressBarService.show();
+				listaConsultoresAllHandler({}).then(hideProgressBar);
 			}
 
 			function listaConsultoresAllHandler(command) {
-				return ListaConsultores.all(command).then(setPresenter, errorHandler);
+				return ListaConsultores.all(command).then(setConsultores, errorHandler);
 			}
 
-			function setPresenter(response) {
+			function setConsultores(response) {
 				$scope.presenter.init(response);
 			}
 
 			function consultarAction() {
-				$scope.resultadosShow = false;
-				return consultarHandler($scope.presenter.toRequest()).then(_resultadoShow(true));
+				if(!$scope.presenter.validateRequest()) {
+					alertMe("Selecciona un consultor");
+					return;
+				}
+
+				consultarHandler($scope.presenter.toRequest()).then(hideProgressBar);
 			}
 
 			function consultarHandler(command) {
-				return GananciasNetasService(command).then(setClientes, errorHandler);
+				ProgressBarService.show();
+				return GananciasNetasService(command).then(setGrupo, errorHandler);
 			}
 
-			function setClientes(response) {
-				$scope.clientes.init(response);
-			}
-
-			function clientes() {
-				return {
-					all: [],
-					init: function(response) {
-						this.all = response;
-					}
-				}
-			}
-
-			function _resultadoShow(show) {
-				return function() {
-					$scope.resultadosShow = show;
-				}
+			function setGrupo(response) {
+				$scope.presenter.setGrupo(response);
 			}
 
 			function errorHandler(response) {
-				alert(response.message());
+				alertMe(response.message());
+				hideProgressBar();
+			}
+
+			function alertMe(message) {
+				alert(message);
+			}
+
+			function hideProgressBar() {
+				ProgressBarService.hide();
 			}
 
 			init();

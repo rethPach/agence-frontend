@@ -1,0 +1,56 @@
+<style>
+  .calendar label {
+    font-size: .8em;
+    float: right;
+    font-weight: normal;
+    color: #213656;
+  }
+</style>
+<div class="panel panel-default" style="margin-top: 20px">
+  <div class="panel-heading">
+    <h3 class="panel-title">Ingresar Periodo</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-6">From</div>
+      <div class="col-xs-6">To</div>
+    </div>
+    <div class="row calendar">
+      <div class="col-xs-3">
+        <label>Month</label>
+        <select
+          ng-change="periodo.onChangeFromMonthSelected()"
+          class="form-control"
+          ng-options="option.txt for option in periodo.from.calendar.months track by option.n"
+          ng-model="periodo.from.monthSelected">
+        </select>
+      </div>
+      <div class="col-xs-3">
+        <label>Year</label>
+         <select
+          class="form-control"
+          ng-change="periodo.onChangeFromYearSelected()"
+          ng-options="option.txt for option in periodo.from.calendar.years track by option.n"
+          ng-model="periodo.from.yearsSelected">
+        </select>
+      </div>
+      <div class="col-xs-3">
+        <label>Month</label>
+        <select
+          class="form-control"
+          ng-options="option.txt for option in periodo.to.calendar.months track by option.n"
+          ng-model="periodo.to.monthSelected">
+        </select>
+      </div>
+      <div class="col-xs-3">
+        <label>Year</label>
+        <select
+          ng-change="periodo.onChangeToYearSelected()"
+          class="form-control"
+          ng-options="option.txt for option in periodo.to.calendar.years track by option.n"
+          ng-model="periodo.to.yearsSelected">
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

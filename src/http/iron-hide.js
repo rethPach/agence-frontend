@@ -1,7 +1,8 @@
 function IronHide($q, $http, IronHideResponse) {
 	var 
 		debug = false,
-		url = "/agence-backend/public/api/";
+		//url = "/agence-backend/public/api/";
+		url = "/api/";
 
 	this.get = function(urlParam, config, data) {
 		var promise = debug 

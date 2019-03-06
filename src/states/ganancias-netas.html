@@ -1,10 +1,11 @@
 <style>
   label {
-    font-size: .9em;
+    font-size: .8em;
     color: #272727;
     font-weight: normal;
   }
 </style>
+<nz-periodo periodo="presenter.periodo"></nz-periodo>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Seleccionar Consultor</h3>
@@ -19,98 +20,58 @@
             ng-options="option.name for option in presenter.consultoresTypes track by option.id"
             ng-model="presenter.consultoreTypeSelected"></select>
   		</div>
-  		<div class="col-xs-3">
-        <label>Selecciona Consultor:</label>
-  			<select
-            class="form-control"
-            ng-options="option.no_usuario for option in presenter.consultores track by option.co_usuario"
-            ng-model="presenter.consultorSelected"></select>
-  		</div>
-      <div class="col-xs-3">
-        <label>From:</label>
-        <p class="input-group">
-          <input type="text" class="form-control" 
-            readonly
-            uib-datepicker-popup="{{presenter.fromDataPicker.format}}" 
-            ng-model="presenter.from" 
-            is-open="presenter.fromDataPicker.opened" 
-            datepicker-options="presenter.fromDataPicker.options" 
-            close-text="Close" alt-input-formats="altInputFormats" />
-          <span class="input-group-btn">
-            <button 
-              type="button" 
-              class="btn btn-default" 
-              ng-click="presenter.fromDataPicker.open()">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </p>
-      </div>
-      <div class="col-xs-3">
-        <label>To:</label>
-        <p class="input-group">
-          <input type="text" class="form-control" 
-            readonly
-            uib-datepicker-popup="{{presenter.toDataPicker.format}}" 
-            ng-model="presenter.to" 
-            is-open="presenter.toDataPicker.opened" 
-            datepicker-options="presenter.toDataPicker.options" 
-            close-text="Close" alt-input-formats="altInputFormats" />
-          <span class="input-group-btn">
-            <button 
-              type="button" 
-              class="btn btn-default" 
-              ng-click="presenter.toDataPicker.open()">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </p>
-      </div>
-  		<div class="col-xs-3">
-  			<button class="btn btn-primary" ng-click="consultarAction()">Consultar</button>
-  		</div>
+  		<nz-select-multi select-multi="presenter.selectMulti" class="col-xs-9"></nz-select-multi>
   	</div>
   </div>
+  <div class="panel-footer">
+    <button class="btn btn-primary" ng-click="consultarAction()">
+      Consultar <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </button>
+  </div>
 </div>
-
-<div class="panel panel-default" ng-show="resultadosShow">
+<div  ng-show="!presenter.grupo.length" style="text-align: center;">No se obtuvieron resultados.</div>
+<div class="panel panel-default" ng-show="presenter.grupo.length">
   <div class="panel-heading">
     <h3 class="panel-title">Resultados</h3>
   </div>
   <div class="panel-body">
   	<uib-tabset active="active">
-	    <uib-tab index="$index + 1" ng-repeat="cliente in clientes.all" heading="{{cliente.cliente_no_razao}}" disable="tab.disabled">
-	     	<table class="table table-bordered">
-	     		<thead>
-	     			<th>Sistema Web</th>
-	     			<th>OS</th>
-	     			<th>NF</th>
-	     			<th>Emissão</th>
-	     			<th>Total</th>
-	     			<th>Líquido</th>
-	     			<th>Comissão</th>
-	     		</thead>
-	     		<tbody>
-	     			<tr ng-repeat="fatura in cliente.faturas track by $index">
-	     				<td>{{fatura.sistema_no_sistema}}</td>
-		     			<td>{{fatura.servicio_consultor_ds_os}}</td>
-		     			<td>{{fatura.num_nf}}</td>
-		     			<td>{{fatura.data_emissao}}</td>
-		     			<td>{{fatura.valor}}</td>
-		     			<td>{{fatura.receita_liquida}}</td>
-		     			<td>{{fatura.comissao}}</td>
-	     			</tr>
-               <tr style="background: #213656; color: white">
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>{{cliente.sum_valor}}</td>
-                  <td>{{cliente.sum_receita_liquida}}</td>
-                  <td>{{cliente.sum_comissao}}</td>
-               </tr>
-	     		</tbody>
-				</table>
+	    <uib-tab index="$index + 1" ng-repeat="consultor in presenter.grupo" heading="{{consultor.name}}" disable="consultor.disabled">
+	     	<uib-tabset active="active" style="margin-top: 10px">
+          <uib-tab index="$index + 1" ng-repeat="cliente in consultor.clientes" heading="{{cliente.name}}" disable="cliente.disabled">
+            <table class="table table-bordered">
+              <thead>
+                <th>Sistema Web</th>
+                <th>OS</th>
+                <th>NF</th>
+                <th>Emissão</th>
+                <th>Total</th>
+                <th>Líquido</th>
+                <th>Comissão</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="fatura in cliente.faturas track by $index">
+                  <td>{{fatura.sistema_no_sistema}}</td>
+                  <td>{{fatura.servicio_consultor_ds_os}}</td>
+                  <td>{{fatura.num_nf}}</td>
+                  <td>{{fatura.data_emissao}}</td>
+                  <td>{{fatura.valor}}</td>
+                  <td>{{fatura.receita_liquida}}</td>
+                  <td>{{fatura.comissao}}</td>
+                </tr>
+                   <tr style="background: #213656; color: white">
+                      <td>Total</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{{cliente.sum_valor}}</td>
+                      <td>{{cliente.sum_receita_liquida}}</td>
+                      <td>{{cliente.sum_comissao}}</td>
+                   </tr>
+              </tbody>
+            </table>
+          </uib-tab>
+        </uib-tabset>
 	    </uib-tab>
 	  </uib-tabset>
   </div>

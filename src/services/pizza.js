@@ -1,32 +1,40 @@
 function Pizza(GraficoBarras) {
 	return function() {
 		var _Pizza = {
-			graficos: [],
-			grafico: {
-				year: '',
-				labels: [],
-				months: [],
-				monthsName: []
-			},
-			graficoMonth: [],
-			months: {
-				all: [],
-				selected: {},
-			},
-			years: {
-				all: [],
-				selected: ''
-			},
-			options: {
-				legend: {
-          display: true,
-          labels: {
-              fontColor: 'rgb(0, 0, 0)',
-              fontSize: 10
-          }
-        }
+			fill: function() {
+				angular.extend(this, {
+					graficos: [],
+					grafico: {
+						year: '',
+						labels: [],
+						months: [],
+						monthsName: []
+					},
+					graficoMonth: [],
+					months: {
+						all: [],
+						selected: {},
+					},
+					years: {
+						all: [],
+						selected: ''
+					},
+					options: {
+						legend: {
+		          display: true,
+		          labels: {
+		              fontColor: 'rgb(0, 0, 0)',
+		              fontSize: 10
+		          }
+		        }
+					}
+				});
 			},
 			init: function(response) {
+				if(!response.desempenos.length) {
+					this.fill();
+					return;
+				}
 				var graficoBarras = GraficoBarras(response.desempenos);
 				this.setGraficos(graficoBarras);
 			},
@@ -85,6 +93,8 @@ function Pizza(GraficoBarras) {
 				this.setGraficoMonth();
 			}
 		};
+
+		_Pizza.fill();
 
 		return _Pizza;
 	};

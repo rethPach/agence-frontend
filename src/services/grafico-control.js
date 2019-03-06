@@ -1,16 +1,20 @@
 function GraficoControl(GraficoBarras) {
 	return function() {
-		return {
-			options: {},
-			grafico: {
-				labels: [],
-				series: [],
-				seriesName: [],
-				data: [],
+		var _GraficoControl = {
+			fill: function() {
+				angular.extend(this, {
+					options: {},
+					grafico: {
+						labels: [],
+						series: [],
+						seriesName: [],
+						data: [],
+					},
+					graficos: [],
+					select: [],
+					selected: {},
+				});
 			},
-			graficos: [],
-			select: [],
-			selected: {},
 			onChangeGrafico: function() {
 				var self = this;
 				var graficoX = this.graficos.filter(function(grafico) {
@@ -19,6 +23,12 @@ function GraficoControl(GraficoBarras) {
 				this.grafico = grafico;
 			},
 			init: function(response) {
+
+				if(!response.desempenos.length) {
+					this.fill();
+					return;
+				}
+
 				this.setOptions({lineAt: response.custo_fixo_medio});
 				this.graficos = GraficoBarras(response.desempenos);
 				this.grafico = this.graficos[0].grafico;
@@ -30,11 +40,7 @@ function GraficoControl(GraficoBarras) {
 			setOptions: function(options) {
 				this.options = angular.extend({
 					scales: {
-	            yAxes: [{
-	                ticks: {
-	                    min: 0
-	                }
-	            }]
+	            yAxes: [{ ticks: { min: 0} }]
 	        },
 	        legend: {
 	            display: true,
@@ -46,6 +52,10 @@ function GraficoControl(GraficoBarras) {
 				}, options);
 			}
 		};
+
+		_GraficoControl.fill();
+
+		return _GraficoControl;
 	}
 }
 

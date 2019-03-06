@@ -48735,10 +48735,11 @@ var loaderState = require('./core/LoaderState');
 factory.create(angular, {
 	name: 'agence-app',
 	dependencies: [require('angular-ui-bootstrap'), require('angular-ui-router'), 'chart.js'],
+	directives: [require('./directives/progress-bar/progress-bar.directive'), require('./directives/nz-periodo/nz-periodo'), require('./directives/nz-select-multi/nz-select-multi')],
 	factories: [require('./http/optimus'), require('./http/iron-hide-response'), require('./http-services/consultores/relatario-service'), require('./http-services/consultores/grafico-service'), require('./http-services/consultores/pizza-service'), require('./http-services/consultores/ganancias-netas-service'), require('./services/calendar'), require('./services/ganancias-netas-presenter'), require('./services/grafico-barras'), require('./services/grafico-control'), require('./services/periodo'), require('./services/pizza'), require('./services/relatario'), require('./services/select-multi')],
-	services: [require('./http/iron-hide'), require('./http-services/consultores/lista-consultores'), require('./services/modal-factory.service')],
+	services: [require('./http/iron-hide'), require('./http-services/consultores/lista-consultores'), require('./services/modal-factory.service'), require('./directives/progress-bar/progress-bar.service')],
 	run: function run($state) {
-		$state.go('ganancias-netas');
+		//$state.go('ganancias-netas');
 	},
 	config: function config($stateProvider) {
 		registerStates($stateProvider);
@@ -48751,7 +48752,7 @@ function registerStates($stateProvider) {
 	loaderState.load(states, $stateProvider);
 }
 
-},{"./core/LoaderState":7,"./core/ModuleFactory":8,"./http-services/consultores/ganancias-netas-service":13,"./http-services/consultores/grafico-service":14,"./http-services/consultores/lista-consultores":15,"./http-services/consultores/pizza-service":16,"./http-services/consultores/relatario-service":17,"./http/iron-hide":19,"./http/iron-hide-response":18,"./http/optimus":20,"./services/calendar":21,"./services/ganancias-netas-presenter":22,"./services/grafico-barras":23,"./services/grafico-control":24,"./services/modal-factory.service":25,"./services/periodo":26,"./services/pizza":27,"./services/relatario":28,"./services/select-multi":29,"./states/agence-home":31,"./states/ganancias-netas":33,"angular":5,"angular-ui-bootstrap":2,"angular-ui-router":3}],7:[function(require,module,exports){
+},{"./core/LoaderState":7,"./core/ModuleFactory":8,"./directives/nz-periodo/nz-periodo":10,"./directives/nz-select-multi/nz-select-multi":12,"./directives/progress-bar/progress-bar.directive":13,"./directives/progress-bar/progress-bar.service":14,"./http-services/consultores/ganancias-netas-service":19,"./http-services/consultores/grafico-service":20,"./http-services/consultores/lista-consultores":21,"./http-services/consultores/pizza-service":22,"./http-services/consultores/relatario-service":23,"./http/iron-hide":25,"./http/iron-hide-response":24,"./http/optimus":26,"./services/calendar":27,"./services/ganancias-netas-presenter":28,"./services/grafico-barras":29,"./services/grafico-control":30,"./services/modal-factory.service":31,"./services/periodo":32,"./services/pizza":33,"./services/relatario":34,"./services/select-multi":35,"./states/agence-home":37,"./states/ganancias-netas":39,"angular":5,"angular-ui-bootstrap":2,"angular-ui-router":3}],7:[function(require,module,exports){
 "use strict";
 
 function LoaderState(states) {
@@ -48879,6 +48880,116 @@ module.exports = {
 };
 
 },{}],9:[function(require,module,exports){
+module.exports = '<style>\n  .calendar label {\n    font-size: .8em;\n    float: right;\n    font-weight: normal;\n    color: #213656;\n  }\n</style>\n<div class="panel panel-default" style="margin-top: 20px">\n  <div class="panel-heading">\n    <h3 class="panel-title">Ingresar Periodo</h3>\n  </div>\n  <div class="panel-body">\n    <div class="row">\n      <div class="col-xs-6">From</div>\n      <div class="col-xs-6">To</div>\n    </div>\n    <div class="row calendar">\n      <div class="col-xs-3">\n        <label>Month</label>\n        <select\n          ng-change="periodo.onChangeFromMonthSelected()"\n          class="form-control"\n          ng-options="option.txt for option in periodo.from.calendar.months track by option.n"\n          ng-model="periodo.from.monthSelected">\n        </select>\n      </div>\n      <div class="col-xs-3">\n        <label>Year</label>\n         <select\n          class="form-control"\n          ng-change="periodo.onChangeFromYearSelected()"\n          ng-options="option.txt for option in periodo.from.calendar.years track by option.n"\n          ng-model="periodo.from.yearsSelected">\n        </select>\n      </div>\n      <div class="col-xs-3">\n        <label>Month</label>\n        <select\n          class="form-control"\n          ng-options="option.txt for option in periodo.to.calendar.months track by option.n"\n          ng-model="periodo.to.monthSelected">\n        </select>\n      </div>\n      <div class="col-xs-3">\n        <label>Year</label>\n        <select\n          ng-change="periodo.onChangeToYearSelected()"\n          class="form-control"\n          ng-options="option.txt for option in periodo.to.calendar.years track by option.n"\n          ng-model="periodo.to.yearsSelected">\n        </select>\n      </div>\n    </div>\n  </div>\n</div>';
+},{}],10:[function(require,module,exports){
+'use strict';
+
+function nzPeriodo() {
+	return {
+		scope: { periodo: '=' },
+		controller: function controller($scope) {},
+		template: require('./nz-periodo.html')
+	};
+}
+
+module.exports = {
+	name: 'nzPeriodo',
+	func: nzPeriodo
+};
+
+},{"./nz-periodo.html":9}],11:[function(require,module,exports){
+module.exports = '<style>\n.calendar label {\n  font-size: .8em;\n  float: right;\n  font-weight: normal;\n  color: #213656;\n}\n.consultores_seleccinados_box {\n  border: 1px solid #dddddd;\n  margin-top: 22px;\n  text-align: center;\n  padding-top: 5px;\n  padding-bottom: 5px;\n  background: #f5f5f5;\n  overflow-y: scroll;\n  height: 200px\n}\n\n.consultores_seleccinados_box .badge {\n  margin: 5px;\n  background: #00467c;\n  border-radius: 0px;\n  padding: 4px;\n}\n</style>\n<div class="row calendar">\n  <div class="col-xs-4">\n    <label>Selecciona un consultor</label>\n    <select\n      ng-change="selectMulti.onSelectItem()"\n      class="form-control"\n      ng-options="option.no_usuario for option in selectMulti.allNotSelected track by option.co_usuario"\n      ng-model="selectMulti.selected">\n    </select>\n  </div>\n  <div class="col-xs-8">\n    <div class="consultores_seleccinados_box">\n      <span class="badge" ng-repeat="option in selectMulti.allSelected track by option.co_usuario">\n        {{option.no_usuario}}\n        <button \n          class="btn btn-danger btn-xs" \n          ng-click="selectMulti.onRemoveSelected(option)">x</button>\n      </span>\n    </div>\n  </div>\n</div>';
+},{}],12:[function(require,module,exports){
+'use strict';
+
+function nzSelectMulti() {
+	return {
+		scope: { selectMulti: '=' },
+		controller: function controller($scope) {},
+		template: require('./nz-select-multi.html')
+	};
+}
+
+module.exports = {
+	name: 'nzSelectMulti',
+	func: nzSelectMulti
+};
+
+},{"./nz-select-multi.html":11}],13:[function(require,module,exports){
+'use strict';
+
+function progressBar() {
+	return {
+		controller: function controller($scope, ProgressBarService) {
+
+			function init() {
+				angular.extend($scope, {
+					_show: false,
+					show: function show(showOption) {
+						this._show = showOption;
+					}
+				});
+
+				subscribeToEvents();
+			}
+
+			init();
+
+			function subscribeToEvents() {
+				ProgressBarService.onShow(function () {
+					$scope.show(true);
+				});
+
+				ProgressBarService.onHide(function () {
+					$scope.show(false);
+				});
+			}
+		},
+		template: '\n\t\t\t<uib-progressbar \n\t\t\t\tng-show="_show"\n\t\t\t\tclass="progress-striped active" \n\t\t\t\ttype="primary">\n\t\t\t</uib-progressbar>'
+	};
+}
+
+module.exports = {
+	name: 'progressBar',
+	func: progressBar
+};
+
+},{}],14:[function(require,module,exports){
+'use strict';
+
+function ProgressBarService($rootScope) {
+
+	this.addSubscriber = function (event, handler) {
+		return $rootScope.$on(event, handler);
+	};
+
+	this.emit = function (eventName, eventData) {
+		$rootScope.$emit(eventName, eventData);
+	};
+
+	this.onShow = function (handler) {
+		this.addSubscriber('onShow', handler);
+	};
+
+	this.onHide = function (handler) {
+		this.addSubscriber('onHide', handler);
+	};
+
+	this.show = function () {
+		this.emit('onShow', {});
+	};
+
+	this.hide = function () {
+		this.emit('onHide', {});
+	};
+}
+
+module.exports = {
+	name: 'ProgressBarService',
+	func: ProgressBarService
+};
+
+},{}],15:[function(require,module,exports){
 module.exports={
     "code": 1000,
     "result": {
@@ -48958,7 +49069,7 @@ module.exports={
         "message": "Todo Cool"
     }
 }
-},{}],10:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports={
     "code": 1000,
     "result": {
@@ -49323,7 +49434,7 @@ module.exports={
         "message": "Todo Cool"
     }
 }
-},{}],11:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports={
     "code": 1000,
     "result": {
@@ -49673,9 +49784,9 @@ module.exports={
         "message": "Todo Cool"
     }
 }
-},{}],12:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports={"code":10000,"result":{"data":{},"message":"OK"}}
-},{}],13:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 function GananciasNetasService(Optimus) {
@@ -49695,7 +49806,7 @@ module.exports = {
 	func: GananciasNetasService
 };
 
-},{"./data/ganancias-netas-service.json":9}],14:[function(require,module,exports){
+},{"./data/ganancias-netas-service.json":15}],20:[function(require,module,exports){
 'use strict';
 
 function GraficoService(Optimus) {
@@ -49715,7 +49826,7 @@ module.exports = {
 	func: GraficoService
 };
 
-},{"./data/relatario.json":11}],15:[function(require,module,exports){
+},{"./data/relatario.json":17}],21:[function(require,module,exports){
 'use strict';
 
 function ListaConsultores(Optimus) {
@@ -49743,7 +49854,7 @@ module.exports = {
 	func: ListaConsultores
 };
 
-},{"./data/lista-consultores-all.json":10,"./data/success-response.json":12}],16:[function(require,module,exports){
+},{"./data/lista-consultores-all.json":16,"./data/success-response.json":18}],22:[function(require,module,exports){
 'use strict';
 
 function PizzaService(Optimus) {
@@ -49763,7 +49874,7 @@ module.exports = {
 	func: PizzaService
 };
 
-},{"./data/relatario.json":11}],17:[function(require,module,exports){
+},{"./data/relatario.json":17}],23:[function(require,module,exports){
 'use strict';
 
 function RelatarioService(Optimus) {
@@ -49783,7 +49894,7 @@ module.exports = {
 	func: RelatarioService
 };
 
-},{"./data/relatario.json":11}],18:[function(require,module,exports){
+},{"./data/relatario.json":17}],24:[function(require,module,exports){
 'use strict';
 
 function IronHideResponse() {
@@ -49834,12 +49945,14 @@ module.exports = {
 	func: IronHideResponse
 };
 
-},{}],19:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 function IronHide($q, $http, IronHideResponse) {
 	var debug = false,
-	    url = "/agence-backend/public/api/";
+
+	//url = "/agence-backend/public/api/";
+	url = "/api/";
 
 	this.get = function (urlParam, config, data) {
 		var promise = debug ? $q.resolve({ data: data }) : $http.get(url.concat(urlParam), config);
@@ -49867,7 +49980,7 @@ module.exports = {
 	func: IronHide
 };
 
-},{}],20:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 function Optimus($q, IronHide, $timeout) {
@@ -49917,7 +50030,7 @@ module.exports = {
 	func: Optimus
 };
 
-},{}],21:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 function Calendar() {
@@ -49953,20 +50066,19 @@ module.exports = {
 	func: Calendar
 };
 
-},{}],22:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
-function GanaciasNetasPresenter() {
+function GanaciasNetasPresenter(SelectMulti, Periodo) {
 	return function () {
 		var _GanaciasNetasPresenter = {
 			consultores: [],
 			consultorSelected: {},
 			consultoresTypes: [],
 			consultoreTypeSelected: {},
-			fromDataPicker: datapicker({}),
-			toDataPicker: datapicker({}),
-			from: '',
-			to: '',
+			selectMulti: SelectMulti({}),
+			grupo: [],
+			periodo: Periodo({ fromYear: 2000, toYear: 2019 }),
 			init: function init(response) {
 				this.setConsultores(response);
 				this.setTypes(response);
@@ -49975,6 +50087,8 @@ function GanaciasNetasPresenter() {
 				this.consultores = response.consultores;
 				this.consultoresTemp = response.consultores;
 				this.consultorSelected = this.consultores[0];
+
+				this.setSelectMulti();
 			},
 			setTypes: function setTypes(response) {
 				var types = response.types;
@@ -49983,45 +50097,46 @@ function GanaciasNetasPresenter() {
 				this.consultoresTypes = types;
 				this.consultoreTypeSelected = types[0];
 			},
+			setGrupo: function setGrupo(grupo) {
+				this.grupo = grupo;
+			},
+			setSelectMulti: function setSelectMulti() {
+				this.selectMulti.init(this.consultores);
+			},
 			onChangeType: function onChangeType() {
 				var self = this;
 
 				if (this.consultoreTypeSelected.id == 4) {
 					this.consultores = this.consultoresTemp;
+					this.setSelectMulti();
 					return;
 				}
 
 				this.consultores = this.consultoresTemp.filter(function (consultor) {
 					return consultor.co_tipo_usuario == self.consultoreTypeSelected.id;
 				});
+
+				this.setSelectMulti();
+			},
+			validateRequest: function validateRequest() {
+				var selectMulti;
+				selectMulti = this.selectMulti.toRequest();
+				return selectMulti.length > 0;
 			},
 			toRequest: function toRequest() {
-				var self = this;
+				var selectMulti, periodo;
+				selectMulti = JSON.stringify(this.selectMulti.toRequest());
+				periodo = this.periodo.toRequest();
 				return {
-					co_usuario: self.consultorSelected.co_usuario,
-					from: self.from,
-					to: self.to
+					co_usuarios: selectMulti,
+					from: periodo.from,
+					to: periodo.to
 				};
 			}
 		};
 
 		return _GanaciasNetasPresenter;
 	};
-
-	function datapicker(config) {
-		return angular.extend({
-			format: 'dd MMMM yyyy',
-			opened: false,
-			options: {
-				formatYear: 'yyyy',
-				maxDate: new Date(),
-				initDate: new Date()
-			},
-			open: function open() {
-				this.opened = true;
-			}
-		}, config);
-	}
 }
 
 module.exports = {
@@ -50029,7 +50144,7 @@ module.exports = {
 	func: GanaciasNetasPresenter
 };
 
-},{}],23:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 function GraficoBarras() {
@@ -50130,22 +50245,26 @@ module.exports = {
 	func: GraficoBarras
 };
 
-},{}],24:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 function GraficoControl(GraficoBarras) {
 	return function () {
-		return {
-			options: {},
-			grafico: {
-				labels: [],
-				series: [],
-				seriesName: [],
-				data: []
+		var _GraficoControl = {
+			fill: function fill() {
+				angular.extend(this, {
+					options: {},
+					grafico: {
+						labels: [],
+						series: [],
+						seriesName: [],
+						data: []
+					},
+					graficos: [],
+					select: [],
+					selected: {}
+				});
 			},
-			graficos: [],
-			select: [],
-			selected: {},
 			onChangeGrafico: function onChangeGrafico() {
 				var self = this;
 				var graficoX = this.graficos.filter(function (grafico) {
@@ -50154,6 +50273,12 @@ function GraficoControl(GraficoBarras) {
 				this.grafico = grafico;
 			},
 			init: function init(response) {
+
+				if (!response.desempenos.length) {
+					this.fill();
+					return;
+				}
+
 				this.setOptions({ lineAt: response.custo_fixo_medio });
 				this.graficos = GraficoBarras(response.desempenos);
 				this.grafico = this.graficos[0].grafico;
@@ -50165,11 +50290,7 @@ function GraficoControl(GraficoBarras) {
 			setOptions: function setOptions(options) {
 				this.options = angular.extend({
 					scales: {
-						yAxes: [{
-							ticks: {
-								min: 0
-							}
-						}]
+						yAxes: [{ ticks: { min: 0 } }]
 					},
 					legend: {
 						display: true,
@@ -50181,6 +50302,10 @@ function GraficoControl(GraficoBarras) {
 				}, options);
 			}
 		};
+
+		_GraficoControl.fill();
+
+		return _GraficoControl;
 	};
 }
 
@@ -50189,7 +50314,7 @@ module.exports = {
 	func: GraficoControl
 };
 
-},{}],25:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 function ModalFactoryService($uibModal) {
@@ -50231,7 +50356,7 @@ module.exports = {
   func: ModalFactoryService
 };
 
-},{}],26:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 function Periodo(Calendar) {
@@ -50304,38 +50429,46 @@ module.exports = {
 	func: Periodo
 };
 
-},{}],27:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 function Pizza(GraficoBarras) {
 	return function () {
 		var _Pizza = {
-			graficos: [],
-			grafico: {
-				year: '',
-				labels: [],
-				months: [],
-				monthsName: []
-			},
-			graficoMonth: [],
-			months: {
-				all: [],
-				selected: {}
-			},
-			years: {
-				all: [],
-				selected: ''
-			},
-			options: {
-				legend: {
-					display: true,
-					labels: {
-						fontColor: 'rgb(0, 0, 0)',
-						fontSize: 10
+			fill: function fill() {
+				angular.extend(this, {
+					graficos: [],
+					grafico: {
+						year: '',
+						labels: [],
+						months: [],
+						monthsName: []
+					},
+					graficoMonth: [],
+					months: {
+						all: [],
+						selected: {}
+					},
+					years: {
+						all: [],
+						selected: ''
+					},
+					options: {
+						legend: {
+							display: true,
+							labels: {
+								fontColor: 'rgb(0, 0, 0)',
+								fontSize: 10
+							}
+						}
 					}
-				}
+				});
 			},
 			init: function init(response) {
+				if (!response.desempenos.length) {
+					this.fill();
+					return;
+				}
 				var graficoBarras = GraficoBarras(response.desempenos);
 				this.setGraficos(graficoBarras);
 			},
@@ -50395,6 +50528,8 @@ function Pizza(GraficoBarras) {
 			}
 		};
 
+		_Pizza.fill();
+
 		return _Pizza;
 	};
 
@@ -50428,7 +50563,7 @@ module.exports = {
 	func: Pizza
 };
 
-},{}],28:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 function Relatario() {
@@ -50450,7 +50585,7 @@ module.exports = {
 	func: Relatario
 };
 
-},{}],29:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 function SelectMulti() {
@@ -50502,15 +50637,15 @@ module.exports = {
 	func: SelectMulti
 };
 
-},{}],30:[function(require,module,exports){
-module.exports = '<style>\n  .calendar label {\n    font-size: .8em;\n    float: right;\n    font-weight: normal;\n    color: #213656;\n  }\n\n  .consultores_seleccinados_box {\n    border: 1px solid #dddddd;\n    margin-top: 22px;\n    text-align: center;\n    padding-top: 5px;\n    padding-bottom: 5px;\n    background: #f5f5f5;\n    overflow-y: scroll;\n    height: 200px\n  }\n\n  .consultores_seleccinados_box .badge {\n    margin: 5px;\n    background: #00467c;\n    border-radius: 0px;\n    padding: 4px;\n  }\n\n</style>\n<uib-tabset active="active">\n  <uib-tab index="0" heading="Por Consultor">\n    <div class="panel panel-default" style="margin-top: 20px">\n      <div class="panel-heading">\n        <h3 class="panel-title">Ingresar Periodo</h3>\n      </div>\n      <div class="panel-body">\n        <div class="row">\n          <div class="col-xs-6">From</div>\n          <div class="col-xs-6">To</div>\n        </div>\n        <div class="row calendar">\n          <div class="col-xs-3">\n            <label>Month</label>\n            <select\n              ng-change="periodo.onChangeFromMonthSelected()"\n              class="form-control"\n              ng-options="option.txt for option in periodo.from.calendar.months track by option.n"\n              ng-model="periodo.from.monthSelected">\n            </select>\n          </div>\n          <div class="col-xs-3">\n            <label>Year</label>\n             <select\n              class="form-control"\n              ng-change="periodo.onChangeFromYearSelected()"\n              ng-options="option.txt for option in periodo.from.calendar.years track by option.n"\n              ng-model="periodo.from.yearsSelected">\n            </select>\n          </div>\n          <div class="col-xs-3">\n            <label>Month</label>\n            <select\n              class="form-control"\n              ng-options="option.txt for option in periodo.to.calendar.months track by option.n"\n              ng-model="periodo.to.monthSelected">\n            </select>\n          </div>\n          <div class="col-xs-3">\n            <label>Year</label>\n            <select\n              ng-change="periodo.onChangeToYearSelected()"\n              class="form-control"\n              ng-options="option.txt for option in periodo.to.calendar.years track by option.n"\n              ng-model="periodo.to.yearsSelected">\n            </select>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class="panel panel-default">\n      <div class="panel-heading">\n        <h3 class="panel-title">Selccionar consultorores</h3>\n      </div>\n      <div class="panel-body">\n        <div class="row calendar">\n          <div class="col-xs-4">\n            <label>Selecciona un consultor</label>\n            <select\n              ng-change="selectMulti.onSelectItem()"\n              class="form-control"\n              ng-options="option.no_usuario for option in selectMulti.allNotSelected track by option.co_usuario"\n              ng-model="selectMulti.selected">\n            </select>\n          </div>\n          <div class="col-xs-8">\n            <div class="consultores_seleccinados_box">\n              <span class="badge" ng-repeat="option in selectMulti.allSelected track by option.co_usuario">\n                {{option.no_usuario}}\n                <button \n                  class="btn btn-danger btn-xs" \n                  ng-click="selectMulti.onRemoveSelected(option)">x</button>\n              </span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="panel-footer">\n        <div class="btn-group" role="group" aria-label="...">\n          <button type="button" class="btn btn-primary" ng-click="relatarioAction()">Relatario</button>\n          <button type="button" class="btn btn-primary" ng-click="graficoAction()">Grafico</button>\n          <button type="button" class="btn btn-primary" ng-click="pizzaAction()">Pizza</button>\n        </div>\n      </div>\n    </div>\n\n    <div class="panel panel-default" ng-show="panelControl.relatario">\n      <div class="panel-heading">\n        <h3 class="panel-title">Relatario</h3>\n      </div>\n      <div class="panel-body">\n        <uib-tabset active="active">\n          <uib-tab index="$index" ng-repeat="consultor in relatario.desempenos" heading="{{consultor.name}}" disable="consultor.disabled">\n             <uib-tabset active="active" style="margin-top: 5px">\n                <uib-tab index="$index" ng-repeat="year in consultor.years" heading="{{year.name}}" disable="year.disabled">\n                  <table class="table table-bordered" style="margin-top: 20px">\n                    <thead>\n                      <th>Periodo</th>\n                      <th>Receita Liquida</th>\n                      <th>Custo Fixo</th>\n                      <th>Comissão</th>\n                      <th>Lucro</th>\n                    </thead>\n                    <tbody>\n                      <tr ng-repeat="month in year.months | orderBy:\'name\'">\n                        <td>{{month.periodo}}</td>\n                        <td>{{month.sum_receita_liquida}}</td>\n                        <td>{{month.sum_custo_fixo}}</td>\n                        <td>{{month.sum_comissao}}</td>\n                        <td>{{month.sum_lucro}}</td>\n                      </tr>\n                      <tr style="color: white; background: #213656">\n                        <td>Saldo</td>\n                        <td>{{year.sum_receita_liquida}}</td>\n                        <td>{{year.sum_custo_fixo}}</td>\n                        <td>{{year.sum_comissao}}</td>\n                        <td>{{year.sum_lucro}}</td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </uib-tab>\n            </uib-tabset>\n            </div>\n          </uib-tab>\n        </uib-tabset>\n      </div>\n    </div>\n    \n    <div class="panel panel-default" ng-show="panelControl.grafico">\n      <div class="panel-heading">\n        <h3 class="panel-title" style="display: inline-block; margin-top: 14px">Grafico</h3>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="graficoControl.onChangeGrafico()"\n            ng-options="option.name for option in graficoControl.select track by option.id"\n            ng-model="graficoControl.selected"></select>\n        </div>\n        <div class="clearfix"></div>\n      </div>\n      <div class="panel-body">\n          <div class="col-xs-8 col-xs-offset-2">\n            <canvas id="bar" class="chart chart-bar"\n              chart-options="graficoControl.options"\n              chart-data="graficoControl.grafico.data" \n              chart-series="graficoControl.grafico.labels"\n              chart-labels="graficoControl.grafico.seriesName">\n            </canvas>\n            <div style="text-align: center;">\n              <span style="background: red; color: red; font-size: .7em">00</span>\n              <span>Custo Fixo Promedio:</span>\n              <span>{{graficoControl.options.lineAt}}</span>\n            </div>\n          </div>\n      </div>\n    </div>\n\n    <div class="panel panel-default" ng-show="panelControl.pizza">\n      <div class="panel-heading">\n        <h3 class="panel-title" style="display: inline-block; margin-top: 14px">Pizza</h3>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="pizza.onChangeYear()"\n            ng-options="option for option in pizza.years.all track by $index"\n            ng-model="pizza.years.selected"></select>\n        </div>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="pizza.onChangeMonth()"\n            ng-options="option.value for option in pizza.months.all track by option.id"\n            ng-model="pizza.months.selected"></select>\n        </div>\n        <div class="clearfix"></div>\n      </div>\n      <div class="panel-body">\n        <div class="col-xs-6 col-xs-offset-3">\n          <canvas \n            class="chart chart-pie"\n            chart-data="pizza.graficoMonth" \n            chart-options="pizza.options"\n            chart-labels="pizza.grafico.labels">\n          </canvas> \n        </div>\n      </div>\n    </div>\n\n  </uib-tab>\n</uib-tabset>';
-},{}],31:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
+module.exports = '<uib-tabset active="active">\n  <uib-tab index="0" heading="Por Consultor">\n    \n    <nz-periodo periodo="periodo"></nz-periodo>\n\n    <div class="panel panel-default">\n      <div class="panel-heading">\n        <h3 class="panel-title">Seleccionar consultorores</h3>\n      </div>\n      <div class="panel-body">\n        <nz-select-multi select-multi="selectMulti"></nz-select-multi>\n      </div>\n      <div class="panel-footer">\n        <div class="btn-group" role="group" aria-label="...">\n          <button type="button" class="btn btn-primary" ng-click="relatarioAction()">\n            Relatario <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>\n          </button>\n          <button type="button" class="btn btn-primary" ng-click="graficoAction()">\n            Grafico <span class="glyphicon glyphicon-signal" aria-hidden="true"></span>\n          </button>\n          <button type="button" class="btn btn-primary" ng-click="pizzaAction()">\n            Pizza <span class="glyphicon glyphicon-record" aria-hidden="true"></span>\n          </button>\n        </div>\n      </div>\n    </div>\n\n    <div class="panel panel-default" ng-show="panelControl.relatario">\n      <div class="panel-heading">\n        <h3 class="panel-title">Relatario</h3>\n      </div>\n      <div class="panel-body">\n        <div ng-show="!relatario.desempenos.length" style="text-align: center;">No se obtuvieron resultados.</div>\n        <uib-tabset active="active"  ng-show="relatario.desempenos.length">\n          <uib-tab index="$index" ng-repeat="consultor in relatario.desempenos" heading="{{consultor.name}}" disable="consultor.disabled">\n             <uib-tabset active="active" style="margin-top: 5px">\n                <uib-tab index="$index" ng-repeat="year in consultor.years" heading="{{year.name}}" disable="year.disabled">\n                  <table class="table table-bordered" style="margin-top: 20px">\n                    <thead>\n                      <th>Periodo</th>\n                      <th>Receita Liquida</th>\n                      <th>Custo Fixo</th>\n                      <th>Comissão</th>\n                      <th>Lucro</th>\n                    </thead>\n                    <tbody>\n                      <tr ng-repeat="month in year.months | orderBy:\'name\'">\n                        <td>{{month.periodo}}</td>\n                        <td>{{month.sum_receita_liquida}}</td>\n                        <td>{{month.sum_custo_fixo}}</td>\n                        <td>{{month.sum_comissao}}</td>\n                        <td>{{month.sum_lucro}}</td>\n                      </tr>\n                      <tr style="color: white; background: #213656">\n                        <td>Saldo</td>\n                        <td>{{year.sum_receita_liquida}}</td>\n                        <td>{{year.sum_custo_fixo}}</td>\n                        <td>{{year.sum_comissao}}</td>\n                        <td>{{year.sum_lucro}}</td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </uib-tab>\n            </uib-tabset>\n            </div>\n          </uib-tab>\n        </uib-tabset>\n      </div>\n    </div>\n    \n    <div class="panel panel-default" ng-show="panelControl.grafico">\n      <div class="panel-heading">\n        <h3 class="panel-title" style="display: inline-block; margin-top: 14px">Grafico</h3>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="graficoControl.onChangeGrafico()"\n            ng-options="option.name for option in graficoControl.select track by option.id"\n            ng-model="graficoControl.selected"></select>\n        </div>\n        <div class="clearfix"></div>\n      </div>\n      <div class="panel-body">\n          <div ng-show="!graficoControl.grafico.data.length" style="text-align: center;">No se obtuvieron resultados.</div>\n          <div class="col-xs-8 col-xs-offset-2"  ng-show="graficoControl.grafico.data.length">\n            <canvas id="bar" class="chart chart-bar"\n              chart-options="graficoControl.options"\n              chart-data="graficoControl.grafico.data" \n              chart-series="graficoControl.grafico.labels"\n              chart-labels="graficoControl.grafico.seriesName">\n            </canvas>\n            <div style="text-align: center;">\n              <span style="background: red; color: red; font-size: .7em">00</span>\n              <span>Custo Fixo Promedio:</span>\n              <span>{{graficoControl.options.lineAt}}</span>\n            </div>\n          </div>\n      </div>\n    </div>\n\n    <div class="panel panel-default" ng-show="panelControl.pizza">\n      <div class="panel-heading">\n        <h3 class="panel-title" style="display: inline-block; margin-top: 14px">Pizza</h3>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="pizza.onChangeYear()"\n            ng-options="option for option in pizza.years.all track by $index"\n            ng-model="pizza.years.selected"></select>\n        </div>\n        <div style="display: inline-block; float: right;">\n           <select\n            class="form-control"\n            ng-change="pizza.onChangeMonth()"\n            ng-options="option.value for option in pizza.months.all track by option.id"\n            ng-model="pizza.months.selected"></select>\n        </div>\n        <div class="clearfix"></div>\n      </div>\n      <div class="panel-body">\n        <div ng-show="!pizza.graficoMonth.length" style="text-align: center;">No se obtuvieron resultados.</div>\n        <div class="col-xs-6 col-xs-offset-3" ng-show="pizza.graficoMonth.length">\n          <canvas \n            class="chart chart-pie"\n            chart-data="pizza.graficoMonth" \n            chart-options="pizza.options"\n            chart-labels="pizza.grafico.labels">\n          </canvas> \n        </div>\n      </div>\n    </div>\n\n  </uib-tab>\n</uib-tabset>';
+},{}],37:[function(require,module,exports){
 'use strict';
 
 function agenceHome($stateProvider) {
 	$stateProvider.state('agence-home', {
 		url: '/agence-home',
-		controller: function controller($scope, Periodo, SelectMulti, ListaConsultores, RelatarioService, Relatario, GraficoService, GraficoControl, Pizza, PizzaService) {
+		controller: function controller($scope, Periodo, SelectMulti, ListaConsultores, RelatarioService, Relatario, GraficoService, GraficoControl, Pizza, PizzaService, ProgressBarService) {
 			function init() {
 				angular.extend($scope, {
 					panelControl: {
@@ -50550,7 +50685,7 @@ function agenceHome($stateProvider) {
 				return angular.extend(periodo, {
 					co_usuarios: JSON.stringify(co_usuarios),
 					validate: function validate() {
-						return this.co_usuarios.length > 0;
+						return co_usuarios.length > 0;
 					}
 				});
 			}
@@ -50574,7 +50709,8 @@ function agenceHome($stateProvider) {
 			}
 
 			function listaConsultoresAllHandler(command) {
-				return ListaConsultores.all(command).then(setSelectMulti, errorHandler);
+				ProgressBarService.show();
+				return ListaConsultores.all(command).then(setSelectMulti, errorHandler).then(showPanel('none'));
 			}
 
 			function setSelectMulti(response) {
@@ -50582,15 +50718,8 @@ function agenceHome($stateProvider) {
 			}
 
 			function relatarioHandler(command) {
+				ProgressBarService.show();
 				RelatarioService(command).then(setRelatario, errorHandler).then(showPanel('relatario'));
-			}
-
-			function showPanel(name) {
-				return function () {
-					Object.keys($scope.panelControl).forEach(function (key, value) {
-						$scope.panelControl[key] = key == name;
-					});
-				};
 			}
 
 			function setRelatario(response) {
@@ -50598,6 +50727,7 @@ function agenceHome($stateProvider) {
 			}
 
 			function graficoHandler(command) {
+				ProgressBarService.show();
 				return GraficoService(command).then(setGraficoControl, errorHandler).then(showPanel('grafico'));
 			}
 
@@ -50606,6 +50736,7 @@ function agenceHome($stateProvider) {
 			}
 
 			function pizzaHandler(command) {
+				ProgressBarService.show();
 				PizzaService(command).then(setPizza, errorHandler).then(showPanel('pizza'));
 			}
 
@@ -50621,6 +50752,16 @@ function agenceHome($stateProvider) {
 				alert(message);
 			}
 
+			function showPanel(name) {
+				return function () {
+					Object.keys($scope.panelControl).forEach(function (key, value) {
+						$scope.panelControl[key] = key == name;
+					});
+
+					ProgressBarService.hide();
+				};
+			}
+
 			init();
 		},
 		template: require('./agence-home.html')
@@ -50629,68 +50770,66 @@ function agenceHome($stateProvider) {
 
 module.exports = agenceHome;
 
-},{"./agence-home.html":30}],32:[function(require,module,exports){
-module.exports = '<style>\n  label {\n    font-size: .9em;\n    color: #272727;\n    font-weight: normal;\n  }\n</style>\n<div class="panel panel-default">\n  <div class="panel-heading">\n    <h3 class="panel-title">Seleccionar Consultor</h3>\n  </div>\n  <div class="panel-body">\n  	<div class="row">\n  		<div class="col-xs-3">\n        <label>Selecciona Consultor Type:</label>\n  			<select\n  					ng-change="presenter.onChangeType()"\n            class="form-control"\n            ng-options="option.name for option in presenter.consultoresTypes track by option.id"\n            ng-model="presenter.consultoreTypeSelected"></select>\n  		</div>\n  		<div class="col-xs-3">\n        <label>Selecciona Consultor:</label>\n  			<select\n            class="form-control"\n            ng-options="option.no_usuario for option in presenter.consultores track by option.co_usuario"\n            ng-model="presenter.consultorSelected"></select>\n  		</div>\n      <div class="col-xs-3">\n        <label>From:</label>\n        <p class="input-group">\n          <input type="text" class="form-control" \n            readonly\n            uib-datepicker-popup="{{presenter.fromDataPicker.format}}" \n            ng-model="presenter.from" \n            is-open="presenter.fromDataPicker.opened" \n            datepicker-options="presenter.fromDataPicker.options" \n            close-text="Close" alt-input-formats="altInputFormats" />\n          <span class="input-group-btn">\n            <button \n              type="button" \n              class="btn btn-default" \n              ng-click="presenter.fromDataPicker.open()">\n              <i class="glyphicon glyphicon-calendar"></i>\n            </button>\n          </span>\n        </p>\n      </div>\n      <div class="col-xs-3">\n        <label>To:</label>\n        <p class="input-group">\n          <input type="text" class="form-control" \n            readonly\n            uib-datepicker-popup="{{presenter.toDataPicker.format}}" \n            ng-model="presenter.to" \n            is-open="presenter.toDataPicker.opened" \n            datepicker-options="presenter.toDataPicker.options" \n            close-text="Close" alt-input-formats="altInputFormats" />\n          <span class="input-group-btn">\n            <button \n              type="button" \n              class="btn btn-default" \n              ng-click="presenter.toDataPicker.open()">\n              <i class="glyphicon glyphicon-calendar"></i>\n            </button>\n          </span>\n        </p>\n      </div>\n  		<div class="col-xs-3">\n  			<button class="btn btn-primary" ng-click="consultarAction()">Consultar</button>\n  		</div>\n  	</div>\n  </div>\n</div>\n\n<div class="panel panel-default" ng-show="resultadosShow">\n  <div class="panel-heading">\n    <h3 class="panel-title">Resultados</h3>\n  </div>\n  <div class="panel-body">\n  	<uib-tabset active="active">\n	    <uib-tab index="$index + 1" ng-repeat="cliente in clientes.all" heading="{{cliente.cliente_no_razao}}" disable="tab.disabled">\n	     	<table class="table table-bordered">\n	     		<thead>\n	     			<th>Sistema Web</th>\n	     			<th>OS</th>\n	     			<th>NF</th>\n	     			<th>Emissão</th>\n	     			<th>Total</th>\n	     			<th>Líquido</th>\n	     			<th>Comissão</th>\n	     		</thead>\n	     		<tbody>\n	     			<tr ng-repeat="fatura in cliente.faturas track by $index">\n	     				<td>{{fatura.sistema_no_sistema}}</td>\n		     			<td>{{fatura.servicio_consultor_ds_os}}</td>\n		     			<td>{{fatura.num_nf}}</td>\n		     			<td>{{fatura.data_emissao}}</td>\n		     			<td>{{fatura.valor}}</td>\n		     			<td>{{fatura.receita_liquida}}</td>\n		     			<td>{{fatura.comissao}}</td>\n	     			</tr>\n               <tr style="background: #213656; color: white">\n                  <td>Total</td>\n                  <td></td>\n                  <td></td>\n                  <td></td>\n                  <td>{{cliente.sum_valor}}</td>\n                  <td>{{cliente.sum_receita_liquida}}</td>\n                  <td>{{cliente.sum_comissao}}</td>\n               </tr>\n	     		</tbody>\n				</table>\n	    </uib-tab>\n	  </uib-tabset>\n  </div>\n</div>';
-},{}],33:[function(require,module,exports){
+},{"./agence-home.html":36}],38:[function(require,module,exports){
+module.exports = '<style>\n  label {\n    font-size: .8em;\n    color: #272727;\n    font-weight: normal;\n  }\n</style>\n<nz-periodo periodo="presenter.periodo"></nz-periodo>\n<div class="panel panel-default">\n  <div class="panel-heading">\n    <h3 class="panel-title">Seleccionar Consultor</h3>\n  </div>\n  <div class="panel-body">\n  	<div class="row">\n  		<div class="col-xs-3">\n        <label>Selecciona Consultor Type:</label>\n  			<select\n  					ng-change="presenter.onChangeType()"\n            class="form-control"\n            ng-options="option.name for option in presenter.consultoresTypes track by option.id"\n            ng-model="presenter.consultoreTypeSelected"></select>\n  		</div>\n  		<nz-select-multi select-multi="presenter.selectMulti" class="col-xs-9"></nz-select-multi>\n  	</div>\n  </div>\n  <div class="panel-footer">\n    <button class="btn btn-primary" ng-click="consultarAction()">\n      Consultar <span class="glyphicon glyphicon-search" aria-hidden="true"></span>\n    </button>\n  </div>\n</div>\n<div  ng-show="!presenter.grupo.length" style="text-align: center;">No se obtuvieron resultados.</div>\n<div class="panel panel-default" ng-show="presenter.grupo.length">\n  <div class="panel-heading">\n    <h3 class="panel-title">Resultados</h3>\n  </div>\n  <div class="panel-body">\n  	<uib-tabset active="active">\n	    <uib-tab index="$index + 1" ng-repeat="consultor in presenter.grupo" heading="{{consultor.name}}" disable="consultor.disabled">\n	     	<uib-tabset active="active" style="margin-top: 10px">\n          <uib-tab index="$index + 1" ng-repeat="cliente in consultor.clientes" heading="{{cliente.name}}" disable="cliente.disabled">\n            <table class="table table-bordered">\n              <thead>\n                <th>Sistema Web</th>\n                <th>OS</th>\n                <th>NF</th>\n                <th>Emissão</th>\n                <th>Total</th>\n                <th>Líquido</th>\n                <th>Comissão</th>\n              </thead>\n              <tbody>\n                <tr ng-repeat="fatura in cliente.faturas track by $index">\n                  <td>{{fatura.sistema_no_sistema}}</td>\n                  <td>{{fatura.servicio_consultor_ds_os}}</td>\n                  <td>{{fatura.num_nf}}</td>\n                  <td>{{fatura.data_emissao}}</td>\n                  <td>{{fatura.valor}}</td>\n                  <td>{{fatura.receita_liquida}}</td>\n                  <td>{{fatura.comissao}}</td>\n                </tr>\n                   <tr style="background: #213656; color: white">\n                      <td>Total</td>\n                      <td></td>\n                      <td></td>\n                      <td></td>\n                      <td>{{cliente.sum_valor}}</td>\n                      <td>{{cliente.sum_receita_liquida}}</td>\n                      <td>{{cliente.sum_comissao}}</td>\n                   </tr>\n              </tbody>\n            </table>\n          </uib-tab>\n        </uib-tabset>\n	    </uib-tab>\n	  </uib-tabset>\n  </div>\n</div>';
+},{}],39:[function(require,module,exports){
 'use strict';
 
 function gananciasNetas($stateProvider) {
 	$stateProvider.state('ganancias-netas', {
 		url: '/ganancias-netas',
-		controller: function controller($scope, ListaConsultores, GananciasNetasService, GanaciasNetasPresenter) {
+		controller: function controller($scope, ListaConsultores, GananciasNetasService, GanaciasNetasPresenter, ProgressBarService) {
 			function init() {
 				angular.extend($scope, {
 					presenter: GanaciasNetasPresenter(),
-					consultarAction: consultarAction,
-					clientes: clientes(),
-					resultadosShow: false
+					consultarAction: consultarAction
 				});
 
 				listaConsultoresAllAction();
 			}
 
 			function listaConsultoresAllAction() {
-				listaConsultoresAllHandler({});
+				ProgressBarService.show();
+				listaConsultoresAllHandler({}).then(hideProgressBar);
 			}
 
 			function listaConsultoresAllHandler(command) {
-				return ListaConsultores.all(command).then(setPresenter, errorHandler);
+				return ListaConsultores.all(command).then(setConsultores, errorHandler);
 			}
 
-			function setPresenter(response) {
+			function setConsultores(response) {
 				$scope.presenter.init(response);
 			}
 
 			function consultarAction() {
-				$scope.resultadosShow = false;
-				return consultarHandler($scope.presenter.toRequest()).then(_resultadoShow(true));
+				if (!$scope.presenter.validateRequest()) {
+					alertMe("Selecciona un consultor");
+					return;
+				}
+
+				consultarHandler($scope.presenter.toRequest()).then(hideProgressBar);
 			}
 
 			function consultarHandler(command) {
-				return GananciasNetasService(command).then(setClientes, errorHandler);
+				ProgressBarService.show();
+				return GananciasNetasService(command).then(setGrupo, errorHandler);
 			}
 
-			function setClientes(response) {
-				$scope.clientes.init(response);
-			}
-
-			function clientes() {
-				return {
-					all: [],
-					init: function init(response) {
-						this.all = response;
-					}
-				};
-			}
-
-			function _resultadoShow(show) {
-				return function () {
-					$scope.resultadosShow = show;
-				};
+			function setGrupo(response) {
+				$scope.presenter.setGrupo(response);
 			}
 
 			function errorHandler(response) {
-				alert(response.message());
+				alertMe(response.message());
+				hideProgressBar();
+			}
+
+			function alertMe(message) {
+				alert(message);
+			}
+
+			function hideProgressBar() {
+				ProgressBarService.hide();
 			}
 
 			init();
@@ -50701,6 +50840,6 @@ function gananciasNetas($stateProvider) {
 
 module.exports = gananciasNetas;
 
-},{"./ganancias-netas.html":32}]},{},[6]);
+},{"./ganancias-netas.html":38}]},{},[6]);
 
 //# sourceMappingURL=app.js.map

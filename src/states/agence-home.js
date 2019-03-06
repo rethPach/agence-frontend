@@ -2,7 +2,8 @@ function agenceHome($stateProvider) {
 	$stateProvider.state('agence-home', {
 		url: '/agence-home',
 		controller: function($scope, Periodo, SelectMulti, ListaConsultores, 
-			RelatarioService, Relatario, GraficoService, GraficoControl, Pizza, PizzaService) {
+			RelatarioService, Relatario, GraficoService, GraficoControl, 
+			Pizza, PizzaService, ProgressBarService) {
 			function init() {
 				angular.extend($scope, {
 					panelControl: {
@@ -42,7 +43,7 @@ function agenceHome($stateProvider) {
 				return angular.extend(periodo, {
 					co_usuarios: JSON.stringify(co_usuarios),
 					validate: function() {
-						return this.co_usuarios.length > 0;
+						return co_usuarios.length > 0;
 					}
 				});		
 			}
@@ -66,7 +67,11 @@ function agenceHome($stateProvider) {
 			}
 
 			function listaConsultoresAllHandler(command) {
-				return ListaConsultores.all(command).then(setSelectMulti, errorHandler);
+				ProgressBarService.show();
+				return ListaConsultores
+				.all(command)
+				.then(setSelectMulti, errorHandler)
+				.then(showPanel('none'));
 			}
 
 			function setSelectMulti(response) {
@@ -74,17 +79,10 @@ function agenceHome($stateProvider) {
 			}
 
 			function relatarioHandler(command) {
+				ProgressBarService.show();
 				RelatarioService(command)
 					.then(setRelatario, errorHandler)
 					.then(showPanel('relatario'));
-			}
-
-			function showPanel(name) {
-				return function() {
-					Object.keys($scope.panelControl).forEach(function(key, value) {
-						$scope.panelControl[key] = key == name;
-					});
-				}
 			}
 
 			function setRelatario(response) {
@@ -92,6 +90,7 @@ function agenceHome($stateProvider) {
 			}
 
 			function graficoHandler(command) {
+				ProgressBarService.show();
 				return GraficoService(command)
 					.then(setGraficoControl, errorHandler)
 					.then(showPanel('grafico'));
@@ -102,6 +101,7 @@ function agenceHome($stateProvider) {
 			}
 
 			function pizzaHandler(command) {
+				ProgressBarService.show();
 				PizzaService(command)
 				.then(setPizza, errorHandler)
 				.then(showPanel('pizza'));
@@ -117,6 +117,16 @@ function agenceHome($stateProvider) {
 
 			function alertMe(message) {
 				alert(message);
+			}
+
+			function showPanel(name) {
+				return function() {
+					Object.keys($scope.panelControl).forEach(function(key, value) {
+						$scope.panelControl[key] = key == name;
+					});
+
+					ProgressBarService.hide();
+				}
 			}
 
 			init();

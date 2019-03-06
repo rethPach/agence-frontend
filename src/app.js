@@ -9,6 +9,11 @@ factory.create(angular, {
 		require('angular-ui-router'),
 		'chart.js'
 	],
+	directives: [
+		require('./directives/progress-bar/progress-bar.directive'),
+		require('./directives/nz-periodo/nz-periodo'),
+		require('./directives/nz-select-multi/nz-select-multi'),
+	],
 	factories: [
 		require('./http/optimus'),
 		require('./http/iron-hide-response'),
@@ -28,10 +33,11 @@ factory.create(angular, {
 	services: [
 		require('./http/iron-hide'),
 		require('./http-services/consultores/lista-consultores'),
-		require('./services/modal-factory.service')
+		require('./services/modal-factory.service'),
+		require('./directives/progress-bar/progress-bar.service')
 	],
 	run: function ($state) {
-  	$state.go('ganancias-netas');
+  	//$state.go('ganancias-netas');
 	},
 	config: function($stateProvider) {
 		registerStates($stateProvider);

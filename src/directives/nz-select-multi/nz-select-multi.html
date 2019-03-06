@@ -1,0 +1,46 @@
+<style>
+.calendar label {
+  font-size: .8em;
+  float: right;
+  font-weight: normal;
+  color: #213656;
+}
+.consultores_seleccinados_box {
+  border: 1px solid #dddddd;
+  margin-top: 22px;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #f5f5f5;
+  overflow-y: scroll;
+  height: 200px
+}
+
+.consultores_seleccinados_box .badge {
+  margin: 5px;
+  background: #00467c;
+  border-radius: 0px;
+  padding: 4px;
+}
+</style>
+<div class="row calendar">
+  <div class="col-xs-4">
+    <label>Selecciona un consultor</label>
+    <select
+      ng-change="selectMulti.onSelectItem()"
+      class="form-control"
+      ng-options="option.no_usuario for option in selectMulti.allNotSelected track by option.co_usuario"
+      ng-model="selectMulti.selected">
+    </select>
+  </div>
+  <div class="col-xs-8">
+    <div class="consultores_seleccinados_box">
+      <span class="badge" ng-repeat="option in selectMulti.allSelected track by option.co_usuario">
+        {{option.no_usuario}}
+        <button 
+          class="btn btn-danger btn-xs" 
+          ng-click="selectMulti.onRemoveSelected(option)">x</button>
+      </span>
+    </div>
+  </div>
+</div>
